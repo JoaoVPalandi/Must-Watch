@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-principal">
+
+    <div class="form-card">
+        <form method="POST">
+            <input type="text" name="titulo-tarefa" 
+                id="titulo-atividade" placeholder="Título da Atividade" 
+                required value="{{ tarefa_selecionada.titulo_tarefa if tarefa_selecionada else '' }}">
+            
+            <input type="search" name="tipo-de-atividade" 
+                id="tipo" value="{{ tarefa_selecionada.data_conclusao if tarefa_selecionada else '' }}">
+
+            <div class="form-buttons">
+                <button type="submit" class="btn-save">Salvar</button>
+
+                {% if tarefa_selecionada %}
+                    <a href="{{ url_for('lista') }}" class="btn-cancel">Cancelar</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <h2>Lista de Tarefas</h2>
+
+    <div class="tarefa-card">
+        {% if tarefas %}
+            <ul>
+                {% for tarefa in tarefas %}
+                    <li>
+                        <span class="tarefa-texto">
+                            {{ tarefa.titulo_tarefa }} <br> 
+                            <small>{{ tarefa.data_conclusao }}</small>
+                        </span>
+                        
+                        <div class="tarefa-actions">
+                            <a href="{{ url_for('update', idTarefa=tarefa.id_tarefa) }}" class="btn-updatee">Editar</a>
+                            <a href="{{ url_for('delete', idTarefa=tarefa.id_tarefa) }}" class="btn-delete">Apagar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="espaco-de-tarefas">
+                <p>Nenhuma tarefa cadastrada</p>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
