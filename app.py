@@ -12,39 +12,39 @@ def home():
     return render_template('home.html', titulo='Home')
 
 @app.route('/lista', methods=['GET','POST'])
-def agenda():
+def atividade():
     atividades = None
 
     if request.method == 'POST':
         titulo_atividade = request.form['titulo-atividade']
         tipo_de_atividade = request.form['tipo-de-atividade']
         atividade = Atividade(titulo_atividade, tipo_de_atividade)
-        atividade.salvar_tarefa()
+        atividade.salvar_atividade()
 
-    atividades = Atividade.obter_tarefas()
+    atividades = Atividade.obter_atividades()
     return render_template('lista.html', titulo='Sua Lista de Desejos', atividades=atividades)
 
-@app.route('/delete/<int:idTarefa>')
-def delete(idTarefa):
-    tarefa = Atividade.id(idTarefa)
-    tarefa.excluir_tarefa()
+@app.route('/delete/<int:idAtividade>')
+def delete(idAtividade):
+    atividade = Atividade.id(idAtividade)
+    atividade.excluir_atividade()
     # return render_template('agenda.html', titulo="Agenda",
     # tarefa=tarefas)
-    return redirect(url_for('agenda'))
+    return redirect(url_for('atividade'))
 
-@app.route('/update/<int:idTarefa>', methods=['GET', 'POST']) 
-def update(idTarefa):
+@app.route('/update/<int:idAtividade>', methods=['GET', 'POST']) 
+def update(idAtividade):
     atividades = None
 
     if request.method == 'POST':
-        titulo_atividade = request.form['titulo-tarefa']
+        titulo_atividade = request.form['titulo-atividade']
         tipo_de_atividade = request.form['tipo-de-atividade']
-        atividade = Atividade(titulo_atividade, tipo_de_atividade, idTarefa)
-        atividade.atualizar_tarefas()
+        atividade = Atividade(titulo_atividade, tipo_de_atividade, idAtividade)
+        atividade.atualizar_atividade()
 
-    atividades = Atividade.obter_tarefas()
-    tarefa_selecionada = Atividade.id(idTarefa)
-    return render_template('atividade.html', titulo=f'Editando a tarefa ID: {idTarefa}',tarefa_selecionada=tarefa_selecionada, atividades=atividades)
+    atividades = Atividade.obter_atividades()
+    atividade_selecionada = Atividade.id(idAtividade)
+    return render_template('lista.html', titulo=f'Editando a atividade ID: {idAtividade}',atividade_selecionada=atividade_selecionada, atividades=atividades)
 
 @app.route('/ola')
 def ola_mundo():
