@@ -11,10 +11,10 @@ DB_PATH = os.getenv('DATABASE', './data/lista.sqlite3')
 def init_db(db_name: str = DB_PATH):
     with connect(db_name) as conn:
         conn.execute("""
-        CREATE TABLE IF NOT EXISTS tarefas (
+        CREATE TABLE IF NOT EXISTS atividades (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            titulo_tarefa TEXT NOT NULL,
-            data_conclusao TEXT      
+            titulo_atividade TEXT NOT NULL,
+            tipo_de_atividade TEXT      
         );
         """)
 
@@ -26,10 +26,11 @@ class Database:
         self.connection: Connection = connect(db_name)
         self.cursor: Cursor = self.connection.cursor()
         self.executar("""
-        CREATE TABLE IF NOT EXISTS tarefas (
-         id INTEGER PRIMARY KEY AUTOINCREMENT,
-         titulo_tarefa TEXT NOT NULL,
-         data_conclusao TEXT);
+       CREATE TABLE IF NOT EXISTS atividades (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            titulo_atividade TEXT NOT NULL,
+            tipo_de_atividade TEXT      
+        );
         """)
 
     def executar(self, query: str, params: tuple = ()) -> Cursor:
