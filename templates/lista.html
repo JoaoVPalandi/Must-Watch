@@ -5,45 +5,59 @@
 
     <div class="form-card">
         <form method="POST">
-            <input type="text" name="titulo-tarefa" 
+            <input type="text" name="titulo-atividade" 
                 id="titulo-atividade" placeholder="Título da Atividade" 
-                required value="{{ tarefa_selecionada.titulo_tarefa if tarefa_selecionada else '' }}">
+                required value="{{ atividade_selecionada.titulo_atividade if atividade_selecionada else '' }}">
+           <select name="tipo-de-atividade" id="tipo-de-atividade" required>
+                <option value="" {% if not atividade_selecionada %}selected{% endif %} disabled>
+                Selecione o tipo de atividade
+                </option>
+                <option value="jogo">Jogo</option>
+
+
+                {% for tipo in lista_de_tipos %}
+                    <option value="{{ tipo }}" 
+                         {% if atividade_selecionada and atividade_selecionada.tipo_de_atividade == tipo %}selected{% endif %}>
+                        {{ tipo }}
+                    </option>
+                {% endfor %}
+            </select>
             
-            <input type="search" name="tipo-de-atividade" 
-                id="tipo" value="{{ tarefa_selecionada.data_conclusao if tarefa_selecionada else '' }}">
+            <input type="search" name="recomendado-por" placeholder="Recomendado por(opcional):"
+                id="tipo" value="{{ atividade_selecionada.tipo_de_atividade if atividade_selecionada else '' }}">
 
             <div class="form-buttons">
                 <button type="submit" class="btn-save">Salvar</button>
 
-                {% if tarefa_selecionada %}
-                    <a href="{{ url_for('lista') }}" class="btn-cancel">Cancelar</a>
+                {% if atividade_selecionada %}
+                    <a href="{{ url_for('atividade') }}" class="btn-cancel">Cancelar</a>
                 {% endif %}
             </div>
         </form>
     </div>
 
-    <h2>Lista de Tarefas</h2>
+    <h2>Lista de Atividades</h2>
 
-    <div class="tarefa-card">
-        {% if tarefas %}
+    <div class="atividade-card">
+        {% if atividades %}
             <ul>
-                {% for tarefa in tarefas %}
+                {% for atividade in atividades %}
                     <li>
-                        <span class="tarefa-texto">
-                            {{ tarefa.titulo_tarefa }} <br> 
-                            <small>{{ tarefa.data_conclusao }}</small>
+                        <span class="atividade-texto">
+                            {{ atividade.titulo_atividade }} <br> 
+                            <small>{{ atividade.tipo_de_atividade }}</small>
                         </span>
                         
-                        <div class="tarefa-actions">
-                            <a href="{{ url_for('update', idTarefa=tarefa.id_tarefa) }}" class="btn-updatee">Editar</a>
-                            <a href="{{ url_for('delete', idTarefa=tarefa.id_tarefa) }}" class="btn-delete">Apagar</a>
+                        <div class="atividade-actions">
+                            <a href="{{ url_for('update', idAtividade=atividade.id_atividade) }}" class="btn-update">Editar</a>
+                            <a href="{{ url_for('delete', idAtividade=atividade.id_atividade) }}" class="btn-delete">Apagar</a>
                         </div>
                     </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <div class="espaco-de-tarefas">
-                <p>Nenhuma tarefa cadastrada</p>
+            <div class="espaco-de-atividades">
+                <p>Nenhuma atividade cadastrada</p>
             </div>
         {% endif %}
     </div>
