@@ -8,23 +8,33 @@
             <input type="text" name="titulo-atividade" 
                 id="titulo-atividade" placeholder="Título da Atividade" 
                 required value="{{ atividade_selecionada.titulo_atividade if atividade_selecionada else '' }}">
-           <select name="tipo-de-atividade" id="tipo-de-atividade" required>
-                <option value="" {% if not atividade_selecionada %}selected{% endif %} disabled>
-                Selecione o tipo de atividade
-                </option>
-                <option value="jogo">Jogo</option>
 
+           <select name="tipo_de_atividade" id="tipo_de_atividade" required>
+    
+                <option value="" disabled {% if not atividade_selecionada %}selected{% endif %}>
+                    Selecione o tipo...
+                </option>
+
+                {% set opcoes_padrao = ['Jogo', 'Filme', 'Série', 'Livro'] %}
+
+                {% for opcao in opcoes_padrao %}
+                    <option value="{{ opcao }}" 
+                        {% if atividade_selecionada and atividade_selecionada.tipo_de_atividade == opcao %}selected{% endif %}>
+                        {{ opcao }}
+                    </option>
+                {% endfor %}
 
                 {% for tipo in lista_de_tipos %}
                     <option value="{{ tipo }}" 
-                         {% if atividade_selecionada and atividade_selecionada.tipo_de_atividade == tipo %}selected{% endif %}>
+                        {% if atividade_selecionada and atividade_selecionada.tipo_de_atividade == tipo %}selected{% endif %}>
                         {{ tipo }}
                     </option>
                 {% endfor %}
+
             </select>
             
-            <input type="search" name="recomendado-por" placeholder="Recomendado por(opcional):"
-                id="tipo" value="{{ atividade_selecionada.tipo_de_atividade if atividade_selecionada else '' }}">
+            <input type="search" name="indicado_por" placeholder="Indicado por(opcional):"
+                id="tipo" value="{{ atividade_selecionada.indicado_por if atividade_selecionada else '' }}">
 
             <div class="form-buttons">
                 <button type="submit" class="btn-save">Salvar</button>

@@ -17,8 +17,10 @@ def atividade():
 
     if request.method == 'POST':
         titulo_atividade = request.form['titulo-atividade']
-        tipo_de_atividade = request.form['tipo-de-atividade']
-        atividade = Atividade(titulo_atividade, tipo_de_atividade)
+        tipo_de_atividade = request.form['tipo_de_atividade']
+        indicado_por = request.form['indicado_por']
+    
+        atividade = Atividade(titulo_atividade, tipo_de_atividade,indicado_por)
         atividade.salvar_atividade()
 
     atividades = Atividade.obter_atividades()
@@ -38,7 +40,7 @@ def update(idAtividade):
 
     if request.method == 'POST':
         titulo_atividade = request.form['titulo-atividade']
-        tipo_de_atividade = request.form['tipo-de-atividade']
+        tipo_de_atividade = request.form['tipo_de_atividade']
         atividade = Atividade(titulo_atividade, tipo_de_atividade, idAtividade)
         atividade.atualizar_atividade()
 

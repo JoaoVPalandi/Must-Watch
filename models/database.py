@@ -14,7 +14,8 @@ def init_db(db_name: str = DB_PATH):
         CREATE TABLE IF NOT EXISTS atividades (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             titulo_atividade TEXT NOT NULL,
-            tipo_de_atividade TEXT      
+            tipo_de_atividade TEXT,
+            indicado_por TEXT      
         );
         """)
 
@@ -29,7 +30,8 @@ class Database:
        CREATE TABLE IF NOT EXISTS atividades (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             titulo_atividade TEXT NOT NULL,
-            tipo_de_atividade TEXT      
+            tipo_de_atividade TEXT,
+            indicado_por TEXT      
         );
         """)
 
